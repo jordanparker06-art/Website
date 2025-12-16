@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Stock Info App</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    text-align: center;
+    padding: 20px;
+  }
+
+  h1 {
+    color: #1a3e7c;
+  }
+
+  button {
+    padding: 12px 25px;
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+    border: none;
+    background-color: #1a3e7c;
+    color: white;
+    border-radius: 5px;
+  }
+
+  button:hover {
+    background-color: #145293;
+  }
+
+  .stock-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    display: inline-block;
+    padding: 25px;
+    margin-top: 25px;
+    width: 320px;
+  }
+
+  .green { color: green; font-weight: bold; }
+  .red { color: red; font-weight: bold; }
+
+  a {
+    color: #1a3e7c;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .nav {
+    margin-bottom: 20px;
+  }
+
+  .nav a {
+    margin: 0 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="scratch.html">Back to Scratch Page</a>
+</div>
+
+<h1>Random Stock Info</h1>
+<p>Click the button to see a random public stock:</p>
+<button onclick="getRandomStock()">Get Random Stock</button>
+
+<div class="stock-card" id="stockCard">
+  <h2 id="companyName">---</h2>
+  <p>Symbol: <span id="stockSymbol">---</span></p>
+  <p>Price: $<span id="stockPrice">---</span></p>
+  <p>Change: <span id="stockChange">---</span></p>
+  <p><a href="#" id="stockLink" target="_blank">More Info</a></p>
+</div>
+
+<script>
+// Static dataset of stocks
+const stockData = {
+  "AAPL": {name: "Apple Inc.", price: 172.0, change: 1.5, changesPercentage: 0.88},
+  "MSFT": {name: "Microsoft Corp.", price: 310.2, change: -2.1, changesPercentage: -0.67},
+  "GOOGL": {name: "Alphabet Inc.", price: 135.5, change: 0.7, changesPercentage: 0.52},
+  "AMZN": {name: "Amazon.com Inc.", price: 140.8, change: -1.2, changesPercentage: -0.85},
+  "TSLA": {name: "Tesla, Inc.", price: 280.4, change: 3.8, changesPercentage: 1.37},
+  "NFLX": {name: "Netflix, Inc.", price: 400.0, change: -0.5, changesPercentage: -0.12},
+  "NVDA": {name: "NVIDIA Corporation", price: 500.1, change: 5.2, changesPercentage: 1.05},
+  "META": {name: "Meta Platforms, Inc.", price: 215.3, change: -2.3, changesPercentage: -1.06}
+};
+
+function getRandomStock() {
+  const symbols = Object.keys(stockData);
+  const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+  const stock = stockData[symbol];
+
+  document.getElementById("companyName").textContent = stock.name;
+  document.getElementById("stockSymbol").textContent = symbol;
+  document.getElementById("stockPrice").textContent = stock.price.toFixed(2);
+  
+  const changeEl = document.getElementById("stockChange");
+  changeEl.textContent = stock.change.toFixed(2) + " (" + stock.changesPercentage.toFixed(2) + "%)";
+  changeEl.className = stock.change >= 0 ? "green" : "red";
+
+  document.getElementById("stockLink").href = `https://finance.yahoo.com/quote/${symbol}`;
+}
+</script>
+
+</body>
+</html>
